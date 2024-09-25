@@ -21,9 +21,10 @@ public class PongService {
     public Mono<ResponseEntity<String>> respond() {
         long now = Instant.now().getEpochSecond();
         if (lastRequestTime.getAndSet(now) == now) {
+            logger.info("Response: " + "Too Many Requests");
             return Mono.just(ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build());
         }
-        logger.info("LocalDateTime: " + LocalDateTime.now() + ", Response: " + "World");
+        logger.info("Response: " + "World");
         return Mono.just(ResponseEntity.ok("World"));
     }
 }
